@@ -3,33 +3,23 @@ import streamlit as st
 st.set_page_config(page_title="영어 부정문 퀴즈", layout="centered")
 
 st.title("🚀 Alex선생님과 함께하는 영어 부정문 퀴즈")
-st.caption("일반동사와 be동사의 부정문 · 20문제 · 2지선다")
+st.caption("일반동사와 be동사의 부정문 · 10문제 · 2지선다")
 
 # ---------------------------
-# 문제 데이터 (20문제)
-# 문제 순서 / 보기 순서 고정
+# 문제 데이터 (10문제)
+# 이미 섞어 둔 고정 순서
 # ---------------------------
 question_data = [
-    {"question": "I (     ) a student.", "answer": "am not", "choices": ["am not", "do not"]},
-    {"question": "She (     ) happy.", "answer": "is not", "choices": ["is not", "does not"]},
-    {"question": "They (     ) teachers.", "answer": "are not", "choices": ["are not", "do not"]},
-    {"question": "He (     ) tall.", "answer": "is not", "choices": ["is not", "does not"]},
-    {"question": "We (     ) busy now.", "answer": "are not", "choices": ["are not", "do not"]},
-    {"question": "You (     ) my friend.", "answer": "are not", "choices": ["are not", "do not"]},
-    {"question": "The dog (     ) hungry.", "answer": "is not", "choices": ["is not", "does not"]},
-    {"question": "My father (     ) at home.", "answer": "is not", "choices": ["is not", "does not"]},
     {"question": "I (     ) like pizza.", "answer": "do not", "choices": ["am not", "do not"]},
-    {"question": "She (     ) play soccer.", "answer": "does not", "choices": ["is not", "does not"]},
+    {"question": "She (     ) happy.", "answer": "is not", "choices": ["is not", "does not"]},
     {"question": "They (     ) study English.", "answer": "do not", "choices": ["are not", "do not"]},
-    {"question": "He (     ) eat breakfast.", "answer": "does not", "choices": ["is not", "does not"]},
-    {"question": "We (     ) watch TV every day.", "answer": "do not", "choices": ["are not", "do not"]},
-    {"question": "You (     ) know the answer.", "answer": "do not", "choices": ["are not", "do not"]},
-    {"question": "My brother (     ) get up early.", "answer": "does not", "choices": ["is not", "does not"]},
-    {"question": "The students (     ) run fast.", "answer": "do not", "choices": ["are not", "do not"]},
     {"question": "My mother (     ) a doctor.", "answer": "is not", "choices": ["is not", "does not"]},
+    {"question": "He (     ) eat breakfast.", "answer": "does not", "choices": ["is not", "does not"]},
     {"question": "Tom and I (     ) classmates.", "answer": "are not", "choices": ["are not", "do not"]},
-    {"question": "She (     ) drink milk.", "answer": "does not", "choices": ["is not", "does not"]},
-    {"question": "I (     ) go to bed late.", "answer": "do not", "choices": ["am not", "do not"]},
+    {"question": "My brother (     ) get up early.", "answer": "does not", "choices": ["is not", "does not"]},
+    {"question": "I (     ) a student.", "answer": "am not", "choices": ["am not", "do not"]},
+    {"question": "The students (     ) run fast.", "answer": "do not", "choices": ["are not", "do not"]},
+    {"question": "He (     ) tall.", "answer": "is not", "choices": ["is not", "does not"]},
 ]
 
 # ---------------------------
@@ -40,8 +30,8 @@ if "quiz_data" not in st.session_state:
 
 if "stage" not in st.session_state:
     # stage 1: 전체 풀이
-    # stage 2: 오답만 다시 풀이
-    # stage 3: 틀린 문제만 정답 공개
+    # stage 2: 틀린 문제만 다시 풀이
+    # stage 3: 1차에서 틀린 문제만 정답 공개
     st.session_state.stage = 1
 
 if "wrong_indices" not in st.session_state:
@@ -94,7 +84,7 @@ if st.session_state.stage == 1:
         st.session_state.wrong_indices = wrong_indices
 
         if len(wrong_indices) == 0:
-            st.session_state.final_score = 20
+            st.session_state.final_score = 10
             st.session_state.stage = 3
         else:
             st.session_state.stage = 2
@@ -109,7 +99,7 @@ elif st.session_state.stage == 2:
     wrong_indices = st.session_state.wrong_indices
 
     st.subheader("1차 결과")
-    st.write(f"점수: **{first_score} / 20**")
+    st.write(f"점수: **{first_score} / 10**")
     st.warning(f"틀린 문제 수: {len(wrong_indices)}문제")
 
     st.markdown("---")
@@ -146,15 +136,15 @@ elif st.session_state.stage == 3:
     wrong_indices = st.session_state.wrong_indices
 
     st.subheader("최종 결과")
-    st.write(f"1차 점수: **{st.session_state.first_score} / 20**")
-    st.write(f"최종 점수: **{st.session_state.final_score} / 20**")
+    st.write(f"1차 점수: **{st.session_state.first_score} / 10**")
+    st.write(f"최종 점수: **{st.session_state.final_score} / 10**")
 
-    if st.session_state.final_score == 20:
+    if st.session_state.final_score == 10:
         st.success("만점입니다!")
         st.balloons()
-    elif st.session_state.final_score >= 16:
+    elif st.session_state.final_score >= 8:
         st.success("아주 잘했습니다!")
-    elif st.session_state.final_score >= 12:
+    elif st.session_state.final_score >= 6:
         st.info("잘했습니다.")
     else:
         st.warning("조금 더 연습해 봅시다.")
